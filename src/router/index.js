@@ -39,6 +39,17 @@ const routes = [
     {
         path: "/qa",
         component: Qa,
+        children: [
+            {
+                path: "",
+                component: () => import("views/qa/QaHome")
+            },
+            {
+                path: "details",
+                name: "qaDetails",
+                component: () => import("views/qa/QaDetails")
+            }
+        ]
 
     },
     {

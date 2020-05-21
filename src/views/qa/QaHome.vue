@@ -17,25 +17,26 @@
                     <el-tab-pane label="等待回答" name="third"></el-tab-pane>
                 </el-tabs>
                 <ul>
-                    <li class="qa_item">
+                    <li class="qa_item" v-for="qa in questions">
                         <div class="number">
                             <div class="border browse">
-                                <p>12</p>
+                                <p>{{qa.visits}}</p>
                                 <p>浏览</p>
                             </div>
                             <div class="border answer">
-                                <p>9</p>
+                                <p>{{qa.reply}}</p>
                                 <p>回答</p>
                             </div>
                         </div>
                         <div class="info">
                             <div class="question">
                                 <p class="author">
-                                    <span class="name">luckness</span>
+                                    <span class="name">{{qa.nickName}}</span>
                                     <span>3分钟前回答</span>
                                 </p>
                                 <p class="title">
-                                    <a href="./qa-detail.html" target="_blank">有关PHP初级进阶的问题？</a>
+<!--                                    <a href="javascript:void(0);" @click="toQaDetails(qa)">{{qa.title}}</a>-->
+                                    <a href="javascript:void(0);" @click="sendQaId(qa.id)">{{qa.title}}</a>
                                 </p>
                             </div>
 
@@ -53,7 +54,7 @@
                                     </li>
                                 </ul>
                                 <div class="pageView">
-                                    <p>浏览量 50 | 2017-07-05 15:09 来自 <a href="#">XX </a></p>
+                                    <p>2017-07-05 15:09 来自 <a href="#">{{qa.nickName}}</a></p>
                                 </div>
                             </div>
                         </div>
@@ -83,6 +84,41 @@
                 // content: "asdjfhakfhajjwdijalkjdihdbjdhciahwhiwjdilhkfjljlhwijdhhfiwdjjlkajcjshiwjdjkjkjwoiwrjkkjfskjowjofhwooa"
             }
         },
+        props: {
+            questions: {
+                type: Array,
+                default: null
+            }
+        },
+        methods: {
+            handleClick: function(){
+
+            },
+            // toQaDetails: function (qa) {
+            //     // let url = this.$router.resolve({
+            //     //     name: "qaDetails",
+            //     //     params: {
+            //     //         a: "sad",
+            //     //         // question: qa
+            //     //     }
+            //     //     // path: "/qa/details",
+            //     //     // query: {
+            //     //     //     question: qa
+            //     //     // }
+            //     // })
+            //     // window.open(url.href, "_blank")
+            //     let url = this.$router.resolve({
+            //         name: "qaDetails",
+            //         query: {
+            //             question: JSON.stringify(qa)
+            //         }
+            //     })
+            //     window.open(url.href, "_blank")
+            // }
+            sendQaId: function (id) {
+                this.$emit('sendQaId', id)
+            }
+        }
     }
 </script>
 

@@ -13,7 +13,7 @@
             <el-main>
                 <ul>
                     <li v-for="article in articles" class="article_item">
-                        <el-link href="https://element.eleme.io" target="_blank" class="article_title" :underline="false">{{article.title}}</el-link>
+                        <el-link :href="article.url" target="_blank" class="article_title" :underline="false">{{article.title}}</el-link>
                         <div class="info">
                             <a href="#" class="info_link" target="_blank">
                                 <el-avatar :src="require('../../assets/img/header/avatar.png')" size="small"></el-avatar>
