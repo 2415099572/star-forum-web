@@ -2,7 +2,7 @@
     <div>
         <top></top>
 <!--        <qa-home></qa-home>-->
-        <router-view v-bind:questions="questions" @sendQaId="getQaId"></router-view>
+        <router-view v-bind:questions="questions" v-bind:qa="qa"></router-view>
     </div>
 </template>
 
@@ -23,7 +23,8 @@
         },
         data(){
             return {
-                questions: []
+                questions: [],
+                qa: {}
             }
         },
         created() {
@@ -33,22 +34,16 @@
                 }).catch(err => {
                     console.log(err)
                 })
+            }else if(this.$route.path === '/qa/details'){
+                findQaById(this.$route.query.id).then(res => {
+                    this.qa = res.data
+                }).catch(err => {
+                    console.log(err);
+                })
             }
         },
         methods: {
-            getQaId: function (data) {
-                findQaById(data).then(res => {
-                    let url = this.$router.resolve({
-                        path: "/qa/details",
-                        query: {
-                            qaDetails: JSON.stringify(res.data)
-                        }
-                    })
-                    window.open(url.href, "_blank")
-                }).catch(err => {
-                    console.log(err)
-                })
-            }
+
         }
 
     }

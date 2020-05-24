@@ -6,10 +6,11 @@ import store from "./store"
 import "./plugins/element"
 import "./assets/icon/iconfont.css"
 
+
 Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
   router,
-  store
+  store,
 }).$mount('#app')

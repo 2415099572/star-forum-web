@@ -1,7 +1,7 @@
 <template>
     <el-container class="content">
         <el-header>
-            <el-tabs v-model="activeName" @tab-click="handleClick" stretch>
+            <el-tabs v-model="activeName1" @tab-click="handleClick1" stretch>
                 <el-tab-pane label="推荐" name="first"></el-tab-pane>
                 <el-tab-pane label="JAVA" name="second"></el-tab-pane>
                 <el-tab-pane label="C++" name="third"></el-tab-pane>
@@ -11,7 +11,7 @@
         </el-header>
         <el-container>
             <el-main>
-                <el-tabs v-model="activeName" @tab-click="handleClick" stretch>
+                <el-tabs v-model="activeName2" @tab-click="handleClick2" stretch>
                     <el-tab-pane label="最新回答" name="first"></el-tab-pane>
                     <el-tab-pane label="热门回答" name="second"></el-tab-pane>
                     <el-tab-pane label="等待回答" name="third"></el-tab-pane>
@@ -35,8 +35,8 @@
                                     <span>3分钟前回答</span>
                                 </p>
                                 <p class="title">
-<!--                                    <a href="javascript:void(0);" @click="toQaDetails(qa)">{{qa.title}}</a>-->
-                                    <a href="javascript:void(0);" @click="sendQaId(qa.id)">{{qa.title}}</a>
+                                    <a :href="'/qa/details?id='+ qa.id" target="_blank">{{qa.title}}</a>
+<!--                                    <a href="javascript:void(0);" @click="sendQaId(qa.id)">{{qa.title}}</a>-->
                                 </p>
                             </div>
 
@@ -76,7 +76,8 @@
         name: "QaHome",
         data(){
             return {
-                activeName: "first",
+                activeName1: "first",
+                activeName2: "first",
                 nickname: "hello",
                 // items: 10,
                 // title: "阿达地方风味伟大的adsdadadadsadadsadsadasdasdadadsadadasdadadadaDSAdadad大大大三的撒打算的撒打算的等哈就开始等哈开机哈单位开会发空间发顺丰喝咖啡能看见你快来吧减肥呢",
@@ -91,7 +92,10 @@
             }
         },
         methods: {
-            handleClick: function(){
+            handleClick1: function(){
+
+            },
+            handleClick2: function(){
 
             },
             // toQaDetails: function (qa) {

@@ -10,3 +10,13 @@ export function userLogin(mobile, password) {
         }
     })
 }
+
+export function checkLogin(token) {
+    return loginRequest({
+        url: "/user/check",
+        method: "post",
+        headers: {
+            'Authorization': token,
+        },
+    })
+}

@@ -2,11 +2,11 @@
     <el-container class="content">
         <el-header>
             <el-tabs v-model="activeName" @tab-click="handleClick" stretch>
-                <el-tab-pane label="推荐" name="first"></el-tab-pane>
-                <el-tab-pane label="JAVA" name="second"></el-tab-pane>
-                <el-tab-pane label="C++" name="third"></el-tab-pane>
-                <el-tab-pane label="PYTHON" name="fourth"></el-tab-pane>
-                <el-tab-pane label="其他" name="five"></el-tab-pane>
+                <el-tab-pane label="推荐" name="0"></el-tab-pane>
+                <el-tab-pane label="JAVA" name="1"></el-tab-pane>
+                <el-tab-pane label="C++" name="3"></el-tab-pane>
+                <el-tab-pane label="PYTHON" name="4"></el-tab-pane>
+                <el-tab-pane label="其他" name="-1"></el-tab-pane>
             </el-tabs>
         </el-header>
         <el-container>
@@ -19,7 +19,7 @@
                                 <el-avatar :src="require('../../assets/img/header/avatar.png')" size="small"></el-avatar>
                                 <p class="nickname">{{nickname}}</p>
                             </a>
-                            <p class="datetime">{{article.date}}</p>
+                            <p class="datetime">发布于： {{article.createTime | timeDateFormat}}</p>
                         </div>
                         <a :href="article.url" class="article_content" target="_blank">{{article.content}}</a>
                     </li>
@@ -39,7 +39,7 @@
             <el-aside width="200px">
                 <div class="write">
                     <p>今天，有什么想写的东西？</p>
-                    <el-button type="primary" size="small">写 文 章</el-button>
+                    <el-button type="primary" size="small" @click="toWriteArticle">写 文 章</el-button>
                 </div>
             </el-aside>
         </el-container>
@@ -47,11 +47,13 @@
 </template>
 
 <script>
+    import {checkLogin} from "../../network/login";
+
     export default {
         name: "ArticleHome",
         data(){
             return {
-                activeName: "first",
+                activeName: "0",
                 nickname: "hello",
                 // items: 10,
                 // title: "阿达地方风味伟大的adsdadadadsadadsadsadasdasdadadsadadasdadadadaDSAdadad大大大三的撒打算的撒打算的等哈就开始等哈开机哈单位开会发空间发顺丰喝咖啡能看见你快来吧减肥呢",
@@ -66,7 +68,75 @@
             }
         },
         methods: {
-            handleClick(){
+            handleClick(tab, event) {
+            },
+            toWriteArticle(){
+                let token = window.sessionStorage.getItem("token")
+                if(token == null){
+                    this.$confirm('需要登录才能进行该操作, 是否跳转至登录页面?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'info'
+                    }).then(() => {
+                        this.$router.push("/login")
+                    }).catch(() => {
+                        console.log("取消跳转");
+                    });
+                }else {
+                    checkLogin(token).then(res => {
+                        if(res.flag == true && res.code == 2000){
+                            let url = this.$router.resolve({
+                                path: "/article/write"
+                            })
+                            window.open(url.href, "_blank")
+                        }else if(res.flag == false && res.code == 2004){
+                            this.$confirm('您的登录已超时, 是否跳转至登录页面?', '提示', {
+                                confirmButtonText: '确定',
+                                cancelButtonText: '取消',
+                                type: 'info'
+                            }).then(() => {
+                                this.$router.push("/login")
+                            }).catch(() => {
+                                console.log("取消跳转");
+                            });
+                        }else {
+                            this.$confirm('您的登录信息有误, 是否跳转至登录页面?', '提示', {
+                                confirmButtonText: '确定',
+                                cancelButtonText: '取消',
+                                type: 'info'
+                            }).then(() => {
+                                this.$router.push("/login")
+                            }).catch(() => {
+                                console.log("取消跳转");
+                            });
+                        }
+                    }).catch(err => {
+                        console.log(err);
+                    })
+                }
+            },
+        },
+        filters : {
+            timeDateFormat : function (msg) {
+                //讲字符串转为Date格式
+                let mt = new Date(msg);
+                //获取年份
+                let year = mt.getFullYear();
+                //从0开始，获取月份
+                let month = (mt.getMonth() + 1).toString().padStart(2,'0');
+                //获取天数
+                let day = mt.getDay().toString().padStart(2,'0');
+                /* if (con === 'yyyy/mm/dd'){
+                     return year + "/" + month + "/" + day;
+                 }*/
+                //获取小时
+                let hh = mt.getHours().toString().padStart(2,'0');
+                //获取分钟
+                let mm = mt.getMinutes().toString().padStart(2,'0');
+                // //获取秒
+                // let ss = mt.getSeconds().toString().padStart(2,'0');
+
+                return year + "." + month + "." + day + " " + hh + ":" + mm;
 
             }
         }
@@ -127,8 +197,8 @@
         font-size: 12px;
     }
     .datetime{
-        padding-left: 50px;
-        padding-right: 10px;
+        padding-left: 20px;
+        /*padding-right: 10px;*/
         text-align: right;
         color: #606266;
         font-size: 12px;

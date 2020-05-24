@@ -10,7 +10,7 @@
             </el-col>
             <el-col :xs="4" :sm="6" :md="8" :lg="10" :xl="11">
                 <div class="grid-content bg-purple-light">
-                    <el-menu :default-active="this.$route.path" class="el-menu" mode="horizontal" @select="handleSelect" background-color="#e5e9f2" router>
+                    <el-menu :default-active="getPath(this.$route.path)" class="el-menu" mode="horizontal" @select="handleSelect" background-color="#e5e9f2" router>
                         <el-menu-item index="/home" class="menu_item">首  页</el-menu-item>
                         <el-menu-item index="/article" class="menu_item">文  章</el-menu-item>
                         <el-menu-item index="/qa" class="menu_item">问  答</el-menu-item>
@@ -35,7 +35,7 @@
                             <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
-                    <el-avatar :src="require('../../assets/img/header/avatar.png')"></el-avatar>
+                   <a @click="toUser" class="toUser"><el-avatar :src="require('../../assets/img/header/avatar.png')"></el-avatar></a>
                 </div>
             </el-col>
         </el-row>
@@ -52,16 +52,22 @@
         },
         methods: {
             handleSelect(key, keyPath) {
-                console.log(key, keyPath);
                 this.activeIndex = key;
-                console.log(this.activeIndex)
-
+            },
+            getPath(path){
+                return "/" + path.split("/")[1]
+            },
+            toUser(){
+                this.$router.push("/user")
             }
         }
     }
 </script>
 
 <style scoped>
+    .toUser:hover{
+        cursor: pointer;
+    }
     .bg-purple {
         background: #d3dce6;
         /*background-color: rgb(229, 233, 242);*/

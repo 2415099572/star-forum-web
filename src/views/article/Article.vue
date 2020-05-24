@@ -30,13 +30,13 @@
 
         },
         created() {
-            if(this.$route.path === '/article'){
+            if(this.$route.path === '/article' || this.$route.path === '/article/'){
                 findArticle().then(res => {
                     this.articles = [...res.data]
                 }).catch(err => {
                     console.log(err);
                 })
-            }else if(this.$route.path === '/article/details'){
+            }else if(this.$route.path === '/article/details' || this.$route.path === '/article/details/'){
                 findArticleById(this.$route.query.id).then(res => {
                     this.articleDetails = res.data
 

@@ -52,7 +52,8 @@
                                     message: "登录成功",
                                     type: "success"
                                 })
-                                window.sessionStorage.setItem("token", res.data)
+                                window.sessionStorage.setItem("token", res.data.token)
+                                window.sessionStorage.setItem("user", JSON.stringify(res.data.user))
                                 this.$router.go(-1)
                             }else {
                                 this.$message.error("账号或密码错误")

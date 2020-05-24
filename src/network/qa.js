@@ -13,3 +13,10 @@ export function findQaById(id) {
         method: "get"
     })
 }
+
+export function findHotProblem() {
+    return qaRequest({
+        url: "/problem/hot",
+        method: "get"
+    })
+}

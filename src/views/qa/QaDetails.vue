@@ -45,16 +45,20 @@
                 content: '<div>asdasdads</div>' +
                     '<pre style="border-style: solid;border-color: #C4C4C4;border-width: 1px;padding: 5px;background-color: #d3dce6;word-break: break-all;word-wrap: break-word;white-space: pre-wrap">' +
                     '<code>public static void main(String[] args){}</code></pre>',
-                qa: {},
                 textarea: '',
             }
         },
         created() {
-            this.init();
         },
         methods: {
-            init: function () {
-                this.qa = JSON.parse(this.$route.query.qaDetails)
+            // init: function () {
+            //     this.qa = JSON.parse(this.$route.query.qaDetails)
+            // }
+        },
+        props: {
+            qa: {
+                type: Object,
+                default: null
             }
         }
     }
